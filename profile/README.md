@@ -9,7 +9,7 @@ The reproducibility study was conducted using the **StatCodeSearch** dataset, wh
 ## 1. Initial Verification
 
 
-An initial verification revealed that, among the 296 OSF projects referenced in the dataset, **32 projects** contained missing or inaccessible files (see [File Not Found Projects](results/file_not_found_projects.txt)).  
+An initial verification revealed that, among the 296 OSF projects referenced in the dataset, **32 projects** contained missing or inaccessible files, see [File Not Found Projects](https://github.com/code-inspect-binder/overview/blob/main/results/file_not_found_projects.txt).  
 This finding indicates that a portion of the dataset had become outdated, likely due to file deletions, renaming of files, or modifications made to OSF repositories after the initial data collection.  
 The absence of formal version control within many OSF repositories further complicates the recovery or exact reproduction of the original computational environments associated with these projects.
 
@@ -17,7 +17,7 @@ The absence of formal version control within many OSF repositories further compl
 
 ## 2. Container Build Status
 
-From the **remaining 264 projects**, containerization failed for **15 projects**, see [Build Failed Projects](results/build_failed_projects.txt).
+From the **remaining 264 projects**, containerization failed for **15 projects**, see [Build Failed Projects](https://github.com/code-inspect-binder/overview/blob/main/results/build_failed_projects.txt).
 The failures were primarily due to:
 
 - **Malformed or incomplete `DESCRIPTION` files:** Automatically generated DESCRIPTION files often lacked required fields or had formatting issues.
@@ -30,7 +30,7 @@ The failures were primarily due to:
 
 ## 3. GitHub Push Status
 
-From the remaining **249 projects**, **26 projects** could not be pushed to GitHub because they contained files larger than 100 MB, violating GitHub’s size restrictions, see [Git Push Failed Projects](results/git_push_failed_projects.txt)
+From the remaining **249 projects**, **26 projects** could not be pushed to GitHub because they contained files larger than 100 MB, violating GitHub’s size restrictions, see [Git Push Failed Projects](https://github.com/code-inspect-binder/overview/blob/main/results/git_push_failed_projects.txt).
 
 ---
 
@@ -46,7 +46,7 @@ Docker images are available on [Docker Hub](https://hub.docker.com/u/meet261).
 
 ## 5. Execution Results Overview
 
-The execution results of these 226 projects are summarized in [execution_results_with_binder.csv](results/execution_results_with_binder.csv)
+The execution results of these 226 projects are summarized in [execution_results_with_binder.csv](https://github.com/code-inspect-binder/overview/blob/main/results/execution_results_with_binder.csv)
 
 This CSV file contains the following columns:
 
