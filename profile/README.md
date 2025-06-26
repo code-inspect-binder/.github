@@ -158,9 +158,15 @@ Each failure case is classified into one of these categories based on the error 
 ## Citation
 
 If you use this repository or refer to this work, please cite:
-
-Saju, L., Holtdirk, T., Mangroliya, M. P., & Bleier, A. (2025).  
-*Computational Reproducibility of R Code Supplements on OSF*.  
-arXiv preprint arXiv:2505.21590. https://arxiv.org/abs/2505.21590
+```
+@inproceedings{Saju2025Computational,
+  title     = {Computational Reproducibility of R Code Supplements on {OSF}},
+  author    = {Saju, Lorraine and Holtdirk, Tobias and Mangroliya, Meetkumar Pravinbhai and Bleier, Arnim},
+  booktitle = {R2CASS 2025: Social Science Meets Web Data: Reproducible and Reusable Computational Approaches, Workshop Proceedings of the 19th International AAAI Conference on Web and Social Media},
+  year      = {2025},
+  doi       = {10.36190/2025.49},
+  publisher = {Association for the Advancement of Artificial Intelligence}
+}
+```
 
 This work was funded by the German Research Foundation (DFG) under project No. 504226141.
