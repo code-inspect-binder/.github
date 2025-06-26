@@ -1,16 +1,30 @@
-# OSF Project Execution Results Summary
-As part of a reproducibility study, we analyzed a collection of R scripts sourced from the [StatCodeSearch](https://huggingface.co/datasets/drndr/statcodesearch) dataset within the GenCodeSearchNet benchmark. These scripts, focused on statistical analysis in social science and psychology research, were linked to corresponding Open Science Framework (OSF) projects. In total, 296 unique OSF projects were identified and examined through our reproducibility pipeline to assess computational reproducibility—that is, whether the original results can be regenerated using the shared code and data.
+## Computational Reproducibility
+**Computational reproducibility** refers to the ability to regenerate the original results of a study using the shared code and data. It is essential for ensuring transparency, trust, and long-term impact—particularly in fields like **social science and psychology**, where data-driven research informs public policy, education, health, and other societal outcomes.
 
-The complete list of project identifiers is available in [**project_ids**](https://github.com/code-inspect-binder/overview/blob/main/metadata/project_ids.csv).
-This CSV contains:
+To support this effort, we developed an automated pipeline that identifies dependencies, builds containerized environments, and executes code artifacts in a controlled setting. The pipeline is available in the [**osf-to-binder**](https://github.com/Code-Inspect/osf-to-binder) repository, where it supports large-scale reproducibility testing using Binder and Docker.
+
+This GitHub organization and its repositories were created to organize, track, and share the results of this reproducibility analysis after executing and evaluating all code artifacts. Each sub-repository corresponds to a specific OSF project and includes reconstructed environments and execution results.
+
+---
+
+## Execution Summary
+Using this reproducibility pipeline, we analyzed a collection of R scripts sourced from the [StatCodeSearch](https://huggingface.co/datasets/drndr/statcodesearch) dataset within the GenCodeSearchNet benchmark. These scripts are primarily concerned with **statistical analyses in social science and psychology research**, and were linked to corresponding Open Science Framework (OSF) projects. In total, 296 unique OSF projects were identified and examined through our reproducibility pipeline.
+
+The complete list of project identifiers is available in [**project_ids.csv**](https://github.com/code-inspect-binder/overview/blob/main/metadata/project_ids.csv), which contains:
 
 | Column         | Description                              |
 |----------------|------------------------------------------|
 | **Project ID** | OSF project identifier for each study    |
 
-We found that only 264 projects were retrievable, and nearly 99% lacked proper dependency information needed to run the code. To address this, we built an automated pipeline that reconstructed the computing environment using Docker. When we executed the scripts, only 25.87% completed successfully without errors. At the project level, 40 (16%) projects were fully reproducible, 34 (13.65%) showed partial reproducibility, and the remaining 175 (70%) projects had no scripts that ran successfully—underscoring persistent obstacles in reproducing research code at scale. We also examined why others failed and found issues such as missing packages, broken file paths, and system-level problems, highlighting the challenges of reproducible science and how automation can help.
+We found that only 264 projects were retrievable, and nearly 99% lacked proper dependency information needed to run the code. When we executed the scripts, only **25.87%** completed successfully without errors. At the project level:
 
-You can find the list of fully reproducible OSF project IDs [here](https://github.com/code-inspect-binder/overview/blob/main/results/fully_successful_projects.csv).
+- **40 projects (16%)** were [fully reproducible](https://github.com/code-inspect-binder/overview/blob/main/results/fully_successful_projects.csv) (i.e., all scripts ran successfully),
+- **34 projects (13.65%)** showed partial reproducibility (i.e., some scripts ran successfully),
+- **175 projects (70%)** had no scripts that ran successfully.
+
+These findings highlight persistent barriers to reproducibility at scale, including missing R packages, broken file paths, and system-level incompatibilities. They also demonstrate how automation and standardized pipelines can help researchers better assess and improve reproducibility in shared research code—especially in domains like social science where reproducible evidence is critical.
+
+---
 
 ## Reproducibility Pipeline
 The reproducibility pipeline used in this study is implemented in the companion repository [**osf-to-binder**](https://github.com/Code-Inspect/osf-to-binder).
@@ -27,7 +41,7 @@ It automates the end-to-end process of:
 
 ## 1. Project Processing Failures
 
-This includes a summary of OSF-hosted R projects that failed at various stages of a reproducibility pipeline. The results are consolidated in [project_processing_failures](https://github.com/code-inspect-binder/overview/blob/main/results/project_processing_failures.csv), which contains:
+This section summarizes OSF-hosted R projects that failed at various stages of the reproducibility pipeline. The results are consolidated in [project_processing_failures](https://github.com/code-inspect-binder/overview/blob/main/results/project_processing_failures.csv), which contains:
 
 | Column            | Description                                                                 |
 |-------------------|-----------------------------------------------------------------------------|
@@ -57,7 +71,7 @@ The final set of **226 projects** were:
 
 Docker images are available on [Docker Hub](https://hub.docker.com/u/meet261).
 
-In addition to the standard repositories, we also created **flowR-enabled variant** for each project. These include an `.Rprofile` and `postBuild` script that ensure each container launches directly into RStudio with the [flowR](https://github.com/flowr-analysis/rstudio-addin-flowr) package preinstalled and available as an RStudio addin for interactive dependency exploration.
+In addition to the standard repositories, we also created **flowR-enabled variants** for each project. These include an `.Rprofile` and `postBuild` script that ensure each container launches directly into RStudio with the [flowR](https://github.com/flowr-analysis/rstudio-addin-flowr) package preinstalled and available as an RStudio addin for interactive dependency exploration.
 
 Repositories follow this naming pattern:
 - Standard: `code-inspect-binder/osf_projectid`
