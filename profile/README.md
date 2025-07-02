@@ -8,7 +8,7 @@ This GitHub organization and its repositories were created to organize, track, a
 ---
 
 ## Execution Summary
-Using this reproducibility pipeline, we analyzed a collection of R scripts sourced from the [StatCodeSearch](https://huggingface.co/datasets/drndr/statcodesearch) dataset within the GenCodeSearchNet benchmark. These scripts are primarily concerned with **statistical analyses in social science and psychology research**, and were linked to corresponding Open Science Framework (OSF) projects. In total, 296 unique OSF projects were identified and examined through our reproducibility pipeline.
+Using this reproducibility pipeline, we analyzed a collection of R scripts sourced from the [StatCodeSearch](https://huggingface.co/datasets/drndr/statcodesearch) dataset within the GenCodeSearchNet benchmark. These R scripts, which focus on statistical analyses in social science and psychology, were sourced from the GenCodeSearchNet benchmark and linked to relevant projects on the Open Science Framework (OSF), a platform for sharing research materials. In total, 296 unique OSF projects were identified and examined through our reproducibility pipeline.
 
 The complete list of project identifiers is available in [**project_ids.csv**](https://github.com/code-inspect-binder/overview/blob/main/metadata/project_ids.csv), which contains:
 
@@ -16,13 +16,17 @@ The complete list of project identifiers is available in [**project_ids.csv**](h
 |----------------|------------------------------------------|
 | **Project ID** | OSF project identifier for each study    |
 
-We found that only 264 projects were retrievable, and nearly 99% lacked proper dependency information needed to run the code. When we executed the scripts, only **25.87%** completed successfully without errors. At the project level:
+We found that only **264 projects** were retrievable from OSF. Among them, nearly **99% lacked proper dependency information**, such as missing `DESCRIPTION` files, environment specifications (e.g., `renv.lock`, `sessionInfo()` output), or other metadata needed to reproduce the software environment.
 
-- **40 projects (16%)** were [fully reproducible](https://github.com/code-inspect-binder/overview/blob/main/results/fully_successful_projects.csv) (i.e., all scripts ran successfully),
+When we attempted to run the scripts, only **25.87%** completed successfully without errors. The remaining scripts encountered issues like missing packages, broken file paths, or coding errors that caused execution to stop.
+
+At the project level:
+
+- **40 projects (16%)** were [fully reproducible](https://github.com/code-inspect-binder/overview/blob/main/results/fully_reproducible_projects.csv) (i.e., all scripts ran successfully),
 - **34 projects (13.65%)** showed partial reproducibility (i.e., some scripts ran successfully),
 - **175 projects (70%)** had no scripts that ran successfully.
 
-These findings highlight persistent barriers to reproducibility at scale, including missing R packages, broken file paths, and system-level incompatibilities. They also demonstrate how automation and standardized pipelines can help researchers better assess and improve reproducibility in shared research code—especially in domains like social science where reproducible evidence is critical.
+These findings highlight persistent barriers to reproducibility at scale, including missing R packages, broken file paths, and system-level incompatibilities. They also demonstrate how automation and standardized pipelines can help researchers better assess and improve reproducibility in shared research code, especially in domains like social science where reproducible evidence is critical.
 
 ---
 
@@ -41,12 +45,12 @@ It automates the end-to-end process of:
 
 ## 1. Project Processing Failures
 
-This section summarizes OSF-hosted R projects that failed at various stages of the reproducibility pipeline. The results are consolidated in [project_processing_failures](https://github.com/code-inspect-binder/overview/blob/main/results/project_processing_failures.csv), which contains:
+This section summarizes OSF-hosted R projects that failed at various stages of the reproducibility pipeline. The results are consolidated in [project_processing_failures.csv](https://github.com/code-inspect-binder/overview/blob/main/results/project_processing_failures.csv), which contains:
 
 | Column            | Description                                                                 |
 |-------------------|-----------------------------------------------------------------------------|
 | **Project ID**     | OSF project identifier                                                     |
-| **Failure Stage**  | Stage where the failure occurred: `File Not Found`, `Container Build Fail`, or `Git Push Fail` |
+| **Failure Stage**  | Stage where the failure occurred: `File Not Found` or `Container Build Fail` |
 | **Reason**         | Explanation of the failure                                                 |
 
 ### Failure Types
@@ -54,38 +58,44 @@ This section summarizes OSF-hosted R projects that failed at various stages of t
 - **File Not Found – 32 projects**  
   Files were missing or inaccessible on OSF—often due to deletion, renaming, or lack of version control.
 
-- **Container Build Fail - 15 projects**  
+- **Container Build Fail – 15 projects**  
   The container build process failed due to issues like malformed `DESCRIPTION` files, unresolved dependencies, or invalid package references.
-
-- **Git Push Fail – 23 projects**  
-  Projects exceeded GitHub's 100MB file limit, preventing the repository from being pushed.
 
 ---
 
 ## 2. Project Processing Successes
 
-The final set of **226 projects** were:
+The final set of **249 projects** successfully passed earlier stages of the reproducibility pipeline (e.g., data availability, container build).
 
-- Successfully containerized  
-- Docker images were built and pushed to Docker Hub
+These projects now fall into two categories:
 
-Docker images are available on [Docker Hub](https://hub.docker.com/u/meet261).
+- **226 projects** were **successfully containerized** and successfully pushed to both [Docker Hub](https://hub.docker.com/u/meet261) and GitHub under the [code-inspect-binder](https://github.com/code-inspect-binder) organization.
+- **23 projects** were **successfully containerized** but could **not be pushed to GitHub or Docker Hub** due to file size limitations (e.g., files >100MB exceeding GitHub’s upload limit).
 
-In addition to the standard repositories, we also created **flowR-enabled variants** for each project. These include an `.Rprofile` and `postBuild` script that ensure each container launches directly into RStudio with the [flowR](https://github.com/flowr-analysis/rstudio-addin-flowr) package preinstalled and available as an RStudio addin for interactive dependency exploration.
+Despite the Git push issues, a few of these 23 projects were successfully containerized, and their corresponding R scripts ran without error. These are considered functionally reproducible, even though their repositories could not be published to GitHub or Docker Hub.
 
-Repositories follow this naming pattern:
-- Standard: `code-inspect-binder/osf_projectid`
-- flowR-enabled: `code-inspect-binder/osf_projectid-f`
+A complete list of [fully reproducible](https://github.com/code-inspect-binder/overview/blob/main/results/fully_reproducible_projects.csv) projects — i.e., projects where all scripts ran successfully — is available at the linked CSV file.
+
+This file also includes a `Git Push Success` column indicating whether the GitHub push step succeeded (`True`) or failed (`False`).
+
+### Repositories and FlowR Integration
+
+For the 226 published projects:
+
+- Standard repositories: `code-inspect-binder/osf_projectid`
+- FlowR-enabled variants: `code-inspect-binder/osf_projectid-f`
+
+Each flowR-enabled container launches directly into RStudio with the [flowR](https://github.com/flowr-analysis/rstudio-addin-flowr) package preinstalled as an RStudio addin for interactive dependency exploration.
 
 **Example:**  
-- Without flowR: [`code-inspect-binder/osf_3kem6`](https://github.com/code-inspect-binder/osf_3kem6)
-- With flowR: [`code-inspect-binder/osf_3kem6-f`](https://github.com/code-inspect-binder/osf_3kem6-f)
+- Without flowR: [`code-inspect-binder/osf_6jmke`](https://github.com/code-inspect-binder/osf_6jmke)  
+- With flowR: [`code-inspect-binder/osf_6jmke-f`](https://github.com/code-inspect-binder/osf_6jmke-f)
 
 ---
 
-## 3. Execution Results Overview
+## 3. Execution Results
 
-The execution results of these 226 projects are summarized in [execution_results_with_binder](https://github.com/code-inspect-binder/overview/blob/main/results/execution_results_with_binder.csv)
+The execution results of these projects are summarized in [execution_results_with_binder](https://github.com/code-inspect-binder/overview/blob/main/results/execution_results_with_binder.csv)
 
 This CSV file contains the following columns:
 
