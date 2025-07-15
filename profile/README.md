@@ -20,7 +20,6 @@ The complete mapping of project identifiers to R script file paths is available 
 | **repo_variant**   | Name of the associated local repository (append `-f` for the version instrumented with flowR) |
 | **r_script_path**  | Path to the R script within the project                                                 |
 
-
 We found that only **264 projects** were retrievable from OSF. Among them, nearly **99% lacked proper dependency information**, such as missing `DESCRIPTION` files, environment specifications (e.g., `renv.lock`, `sessionInfo()` output), or other metadata needed to reproduce the software environment.
 
 To maintain execution integrity, each R script was run from within its corresponding directory, ensuring that relative paths to local datasets and files were preserved. This context-aware setup was achieved by programmatically adjusting the working directory at runtime, allowing scripts to function as originally intended without manual intervention.
